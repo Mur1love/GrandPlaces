@@ -24,6 +24,10 @@
 	<string>We need to tale a picture</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>We need to tale a picture</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Need to get your location</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>Need to get your location</string>
 	<key>CFBundleVersion</key>
 	<string>$(FLUTTER_BUILD_NUMBER)</string>
 	<key>LSRequiresIPhoneOS</key>

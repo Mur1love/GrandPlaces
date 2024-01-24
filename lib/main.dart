@@ -12,12 +12,15 @@ void main() {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
+
+
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
       create: (ctx) => GrandPlaces(),
       child: MaterialApp(
+        debugShowCheckedModeBanner: false,
         title: 'Grand Places',
         theme: ThemeData(
           colorScheme: ColorScheme.fromSwatch().copyWith(
