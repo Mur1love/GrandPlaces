@@ -10,6 +10,19 @@ import 'package:grand_places/utils/db_util.dart';
 class GrandPlaces with ChangeNotifier {
   List<Place> _items = [];
 
+  Future<void> loadPlaces() async {
+    final dataList = await DbUtil.getData('places');
+    _items = dataList.map(
+      (item) => Place(
+        id: item['id'],
+        title: item['title'],
+        image: File(item['image']),
+        location: null,
+      ),
+    ).toList();
+    notifyListeners();
+  }
+
   List<Place> get items {
     return [..._items];
   }
