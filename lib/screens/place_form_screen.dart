@@ -9,6 +9,12 @@ class PlaceFormScreen extends StatefulWidget {
 }
 
 class _PlaceFormScreenState extends State<PlaceFormScreen> {
+  final _titleController = TextEditingController();
+
+  void _submitForm() {
+
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -19,24 +25,26 @@ class _PlaceFormScreenState extends State<PlaceFormScreen> {
         // mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          const Expanded(
+          Expanded(
             child: SingleChildScrollView(
               child: Padding(
-                padding: EdgeInsets.all(10.0),
+                padding: const EdgeInsets.all(10.0),
                 child: Column(
                   children: [
                     TextField(
-                      decoration: InputDecoration(labelText: 'Título'),
+                      controller: _titleController,
+                      decoration: const InputDecoration(labelText: 'Título'),
                     ),
-                    SizedBox(height: 10),
-                    ImageInput(),
+                    const SizedBox(height: 10),
+                    const ImageInput(),
+
                   ],
                 ),
               ),
             ),
           ),
           ElevatedButton.icon(
-            onPressed: () {},
+            onPressed: () => _submitForm(),
             icon: const Icon(
               Icons.add,
               color: Colors.black,
