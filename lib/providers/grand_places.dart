@@ -1,5 +1,11 @@
+// ignore_for_file: dead_code, prefer_final_fields
+
+import 'dart:io';
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:grand_places/models/place.dart';
+import 'package:grand_places/utils/db_util.dart';
 
 class GrandPlaces with ChangeNotifier {
   List<Place> _items = [];
@@ -8,12 +14,30 @@ class GrandPlaces with ChangeNotifier {
     return [..._items];
   }
 
-  int get itemCount {
+  int get itemsCount {
     return _items.length;
   }
 
-  Place itemByIndex (int index) {
+  Place itemByIndex(int index) {
     return _items[index];
   }
 
+  void addPlace(String title, File image) {
+    final newPlace = Place(
+      id: Random().nextDouble().toString(),
+      title: title,
+      location: null,
+      image: image,
+    );
+    _items.add(newPlace);
+    DbUtil.insert(
+      'places',
+      {
+        'id': newPlace.id,
+        'title': newPlace.title,
+        'image': newPlace.image.path,
+      },
+    );
+    notifyListeners();
+  }
 }
