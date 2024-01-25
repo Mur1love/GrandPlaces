@@ -1,5 +1,3 @@
-// ignore_for_file: no_leading_underscores_for_local_identifiers
-
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -8,9 +6,9 @@ import 'package:path/path.dart' as path;
 import 'package:path_provider/path_provider.dart' as syspaths;
 
 class ImageInput extends StatefulWidget {
-  const ImageInput({super.key, required this.onSelectImage});
-
   final Function onSelectImage;
+
+  const ImageInput(this.onSelectImage, {Key? key}) : super(key: key);
 
   @override
   State<ImageInput> createState() => _ImageInputState();
@@ -20,8 +18,8 @@ class _ImageInputState extends State<ImageInput> {
   File? _storedImage;
 
   _takePicture() async {
-    final ImagePicker _picker = ImagePicker();
-    XFile imageFile = await _picker.pickImage(
+    final ImagePicker picker = ImagePicker();
+    XFile imageFile = await picker.pickImage(
       source: ImageSource.camera,
       maxWidth: 600,
     ) as XFile;
@@ -45,29 +43,26 @@ class _ImageInputState extends State<ImageInput> {
         Container(
           width: 180,
           height: 100,
-          alignment: Alignment.center,
           decoration: BoxDecoration(
-            border: Border.all(
-              width: 1,
-              color: Colors.grey,
-            ),
+            border: Border.all(width: 1, color: Colors.grey),
           ),
+          alignment: Alignment.center,
           child: _storedImage != null
               ? Image.file(
                   _storedImage!,
                   width: double.infinity,
                   fit: BoxFit.cover,
                 )
-              : const Text('Nenhuma Imagem'),
+              : const Text('Nenhuma imagem!'),
         ),
         const SizedBox(width: 10),
         Expanded(
           child: TextButton.icon(
-            onPressed: () => _takePicture(),
             icon: const Icon(Icons.camera),
             label: const Text('Tirar Foto'),
+            onPressed: _takePicture,
           ),
-        )
+        ),
       ],
     );
   }

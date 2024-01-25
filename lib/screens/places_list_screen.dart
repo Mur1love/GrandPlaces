@@ -23,27 +23,36 @@ class PlacesListScreen extends StatelessWidget {
       ),
       body: FutureBuilder(
         future: Provider.of<GrandPlaces>(context, listen: false).loadPlaces(),
-        builder: (ctx, snapshot) => snapshot.connectionState == ConnectionState.waiting
-        ? const Center(child: CircularProgressIndicator()) 
-        : Consumer<GrandPlaces>(
-          child: const Center(
-            child: Text('Nenhum Local Cadastrado'),
-          ),
-          builder: (ctx, grandPlaces, ch) => grandPlaces.itemsCount == 0
-              ? ch!
-              : ListView.builder(
-                  itemBuilder: (ctx, i) => ListTile(
-                    leading: CircleAvatar(
-                      backgroundImage: FileImage(
-                        grandPlaces.itemByIndex(i).image
-                      ),
-                    ),
-                    title: Text(grandPlaces.itemByIndex(i).title),
-                    onTap: () {},
-                  ),
-                  itemCount: grandPlaces.itemsCount,
+        builder: (ctx, snapshot) => snapshot.connectionState ==
+                ConnectionState.waiting
+            ? const Center(child: CircularProgressIndicator())
+            : Consumer<GrandPlaces>(
+                child: const Center(
+                  child: Text('Nenhum Local Cadastrado'),
                 ),
-        ),
+                builder: (ctx, grandPlaces, ch) => grandPlaces.itemsCount == 0
+                    ? ch!
+                    : ListView.builder(
+                        itemBuilder: (ctx, i) => ListTile(
+                          leading: CircleAvatar(
+                            backgroundImage:
+                                FileImage(grandPlaces.itemByIndex(i).image),
+                          ),
+                          title: Text(grandPlaces.itemByIndex(i).title),
+                          subtitle: Text(grandPlaces
+                              .itemByIndex(i)
+                              .location!
+                              .address as String),
+                          onTap: () {
+                            Navigator.of(context).pushNamed(
+                              AppRoutes.PlaceDetail,
+                              arguments: grandPlaces.itemByIndex(i),
+                            );
+                          },
+                        ),
+                        itemCount: grandPlaces.itemsCount,
+                      ),
+              ),
       ),
     );
   }
